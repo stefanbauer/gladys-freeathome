@@ -35,10 +35,9 @@ require JPEG/PNG, exactly 800 × 534 pixels, under 150 KB, and a publicly reacha
 direct **HTTPS URL** without redirects. The store indexer downloads, validates
 and rehosts that image.
 
-The source repository is public, but the implementation and cover are still on
-the feature branch, not the default branch. `cover_image` remains absent from
-the manifest. The image is visible in the branch's README, but is **not yet
-activated on the installed Gladys catalog card**. When the implementation reaches
-the default branch, use the cover's stable public raw HTTPS URL, verify an
-anonymous fetch and its dimensions/size, then set `cover_image` to that URL.
+The source repository is public; implementation and cover are on the default
+branch `main`. `cover_image` remains absent from the manifest. The image is
+visible in the README, but is **not yet activated on the installed Gladys catalog
+card**. For catalog activation, use the cover's stable public raw HTTPS URL,
+verify an anonymous fetch and its dimensions/size, then set `cover_image` to that URL.
 Public source code alone does not publish a Docker image or a Store listing.

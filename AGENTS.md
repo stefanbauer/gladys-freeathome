@@ -25,11 +25,12 @@ JavaScript SDK/template and external-integration contracts, not an in-core servi
 
 ## Workflow
 
-- Use feature branches for implementation. Keep changes scoped and reviewable.
+- Continue development directly on `main`, as requested by Stefan. Keep changes
+  scoped and reviewable.
 - Ask before pushing further work, opening PRs, making the repository public,
   publishing images/releases, or submitting to the Gladys Store.
 - No Store-discovery topic (`gladys-assistant-integration`) at this stage.
 - Verify behavior using the SDK's testing tools and inspect real Gladys rendering
   for UI changes. Follow the established English/French/German localization pattern.
-- Initial project status is scaffolding only; do not claim a working integration
-  or ready-to-run commands until implemented and verified.
+- See README.md for implemented scope, verified behavior and remaining publication
+  steps. Public source code does not imply a published Docker image or release.
