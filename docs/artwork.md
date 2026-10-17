@@ -3,11 +3,12 @@
 The repository-root `cover.png` is the integration's prepared catalog artwork:
 
 - PNG, RGB, opaque, exactly **800 × 534 pixels**.
-- **17,517 bytes**, below Gladys' 150 KB limit.
+- **37,187 bytes**, below Gladys' 150 KB limit.
 - Flat background **#00ACEC** (RGB 0, 172, 236).
-- Only centered white, single-line `free@home` text in a neutral sans-serif.
-  No icon or manufacturer logo. This independent community-integration artwork
-  was generated for the project, not traced from the official app icon.
+- Centered white text in a neutral sans-serif: smaller `Busch & Jäger` above
+  larger `free@home`, spanning about 69% of the canvas width.
+  No icon or reproduced manufacturer logo. This independent community-integration
+  artwork was generated for the project, not traced from the official app icon.
 - After generation, the foreground was centered and composited onto the exact
   flat blue background, resized to the required dimensions and losslessly
   compressed. Only antialiased edges introduce intermediate colors.
