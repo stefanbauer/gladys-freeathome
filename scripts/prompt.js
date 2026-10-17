@@ -2,7 +2,7 @@ import { createInterface } from 'node:readline/promises';
 import { Writable } from 'node:stream';
 
 export async function prompt(label, hidden = false) {
-  if (!process.stdin.isTTY) throw new Error('Use an interactive terminal on the Mac.');
+  if (!process.stdin.isTTY) throw new Error('Use an interactive terminal.');
   const output = hidden
     ? new Writable({
         write(_chunk, _encoding, done) {

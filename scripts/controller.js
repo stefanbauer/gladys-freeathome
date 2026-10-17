@@ -9,7 +9,7 @@ try {
   const command = process.argv[2];
   if (command === 'setup') {
     if (!process.stdin.isTTY) {
-      console.error('Run setup in an interactive terminal on the Mac.');
+      console.error('Run setup in an interactive terminal.');
       process.exit(1);
     }
     console.error(
@@ -40,7 +40,7 @@ try {
   }
 } catch (error) {
   if (error.code === 'ENOENT') {
-    console.error('Local credentials missing. Run npm run setup:controller on the Mac first.');
+    console.error('Local credentials missing. Run npm run setup:controller first.');
   } else if (error.code === 'EEXIST') {
     console.error(
       'Credentials already exist. Edit data/controller.json locally; setup will not overwrite it.',
