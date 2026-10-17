@@ -1,8 +1,14 @@
 # free@home for Gladys Assistant
 
+![Independent free@home integration artwork](cover.png)
+
 Private, standalone external integration using the official Gladys JavaScript
 SDK and ABB's **local REST + WebSocket API**. No XMPP, cloud API, virtual-device
 registration or changes to the free@home installation.
+
+Independent community project, not an official ABB/Busch-Jaeger product.
+The [cover artwork and publication notes](docs/artwork.md) describe the asset's
+format, origin and pending catalog URL.
 
 ## Implemented scope
 
