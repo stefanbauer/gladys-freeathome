@@ -9,6 +9,13 @@
   },
   "scripts": {
     "start": "node --env-file-if-exists=.env index.js",
+    "setup:controller": "node scripts/controller.js setup",
+    "check:controller": "node scripts/controller.js check",
+    "dev:login": "node scripts/dev.js login",
+    "dev:prepare": "node scripts/dev.js prepare",
+    "dev:sync": "node scripts/dev.js sync",
+    "dev:connect": "node scripts/dev.js connect",
+    "dev:configure": "node scripts/dev.js configure",
     "test": "node --test",
     "lint": "eslint .",
     "format": "prettier --write .",

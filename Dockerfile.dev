@@ -1,0 +1,5 @@
+# Idle registration container; the only SDK process runs natively on the Mac.
+# Never build this under the production image tag.
+FROM node:24-alpine
+USER node
+CMD ["sleep", "infinity"]
