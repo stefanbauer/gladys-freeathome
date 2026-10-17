@@ -23,6 +23,12 @@ supported channels. Create the ones you need and assign rooms yourself. One
 physical multichannel actuator can have several entries. The integration does
 not create or delete user devices automatically.
 
+Equally named channels on one device get an API channel suffix in discovery,
+such as `Double button [ch0000]` and `[ch0003]`. This does not mean upper/lower:
+REST supplies no physical mapping, and a rocker may send multiple actions on one
+channel. Existing devices keep their user-owned names; rename them in Gladys if
+needed.
+
 ## Controls and button events
 
 Opening and slat opening are **0% closed, 100% open**. Slats appear only with

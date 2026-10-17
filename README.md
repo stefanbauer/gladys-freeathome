@@ -67,6 +67,13 @@ only the channels you need, assign rooms and names there. The integration never
 creates/deletes user devices itself. Only created features receive states and
 only created, owned actuator features accept commands.
 
+Equally named channels on the same physical device get their API channel address
+appended in discovery, for example `Double button [ch0000]` and
+`Double button [ch0003]`. This is not an upper/lower label: the REST API does not
+provide that physical mapping, and a rocker can send multiple actions on one
+channel. Existing user-created device names are not overwritten; rename them
+in Gladys if desired.
+
 For a button, first create its channel. In the scene editor choose
 **Integrations → free@home → Button action**, select that button and optionally
 an action. Leaving the action empty matches any action from that button.
@@ -123,7 +130,7 @@ reconnect. No test calls the real installation.
 The image runs as `node` with `dumb-init` and supports Gladys' read-only root
 filesystem with no Linux capabilities. It requires no local persistence: config
 comes from Gladys, logs go to stdout/stderr. Build context excludes credentials,
-local data and developer/test scripts. The same ten tests passed inside
+local data and developer/test scripts. Runtime tests passed inside
 `linux/arm64` and emulated `linux/amd64` containers. The Gladys-managed arm64
 container was also checked against the real SysAP, including restart and
 preservation of the existing four devices, their settings and states. No new

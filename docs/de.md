@@ -27,6 +27,12 @@ Kanäle angeboten. Die gewünschten Kanäle selbst anlegen und Räumen zuweisen.
 Ein physischer Mehrfachaktor kann mehrere Einträge haben. Die Integration legt
 keine Geräte automatisch an und löscht keine vorhandenen Geräte.
 
+Gleich benannte Kanäle desselben Geräts erhalten in der Entdeckung die API-
+Kanalkennung als Zusatz, etwa `Doppeltaster [ch0000]` und `[ch0003]`. Das bedeutet
+nicht oben/unten: Die REST-API liefert diese physische Zuordnung nicht; eine
+Wippe kann mehrere Aktionen auf einem Kanal senden. Bereits angelegte Geräte
+behalten ihre Namen und lassen sich bei Bedarf in Gladys umbenennen.
+
 ## Steuerung und Taster
 
 Rolloposition und Lamellenöffnung sind **0 % geschlossen, 100 % offen**. Die

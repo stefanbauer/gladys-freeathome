@@ -55,6 +55,7 @@ export function buildCatalog(gladys, configuration) {
   for (const [system, model] of Object.entries(configuration)) {
     for (const [serial, device] of Object.entries(model.devices)) {
       if (device.interface?.startsWith('vdev:')) continue;
+      const discoveredChannels = new Map();
       for (const [channelId, channel] of Object.entries(device.channels || {})) {
         const functionText = String(channel.functionID ?? '');
         if (!/^[0-9a-f]+$/i.test(functionText)) continue;
@@ -222,7 +223,15 @@ export function buildCatalog(gladys, configuration) {
               });
           }
         }
-        if (discovered.features.length) catalog.devices.push(discovered);
+        if (discovered.features.length) discoveredChannels.set(channelId, discovered);
+      }
+      const names = [...discoveredChannels.values()].map((d) => d.name);
+      for (const [channelId, discovered] of discoveredChannels) {
+        // REST channel addresses distinguish channels, not physical rocker
+        // positions. Never label these "upper/lower" based on their order.
+        if (names.filter((name) => name === discovered.name).length > 1)
+          discovered.name += ` [${channelId}]`;
+        catalog.devices.push(discovered);
       }
     }
   }

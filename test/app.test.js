@@ -139,6 +139,39 @@ test('SDK discovery and feedback expose only supported channels; states require 
   assert.deepEqual(state.writes, []);
 });
 
+test('discovery distinguishes equally named channels without changing their identity or guessing rocker positions', async (t) => {
+  const { state, gladys, device, send } = await setup(t);
+  const first = device('Dimming button').external_id;
+  const second = device('Blind button').external_id;
+  const channels = state.configuration['synthetic-system'].devices.SYNTHETIC.channels;
+  channels.ch0004.displayName = 'Dimming button';
+  channels.ch0006.displayName = 'Dimming button'; // Unsupported channel must not appear.
+  send({}, { configDirty: true });
+  await until(() =>
+    gladys.fake.discoveredDevices.some((d) => d.name === 'Dimming button [ch0004]'),
+  );
+  const named = (id) => gladys.fake.discoveredDevices.find((d) => d.external_id === id).name;
+  assert.equal(named(first), 'Dimming button [ch0003]');
+  assert.equal(named(second), 'Dimming button [ch0004]');
+  assert.equal(gladys.fake.discoveredDevices.length, 6);
+  assert.ok(gladys.fake.discoveredDevices.some((d) => d.name === 'Switched consumer'));
+  // Removing the real collision restores the original name, despite an
+  // unsupported channel retaining that label. Feature IDs must stay stable too.
+  const featureIds = gladys.fake.discoveredDevices.flatMap((d) =>
+    d.features.map((f) => f.external_id),
+  );
+  channels.ch0004.displayName = 'Separate button';
+  send({}, { configDirty: true });
+  await until(() => named(second) === 'Separate button');
+  assert.equal(named(first), 'Dimming button');
+  assert.deepEqual(
+    gladys.fake.discoveredDevices.flatMap((d) => d.features.map((f) => f.external_id)),
+    featureIds,
+  );
+  assert.deepEqual(state.writes, []);
+  assert.deepEqual(gladys.fake.sceneEvents, []);
+});
+
 test('commands resolve actual pairing IDs, enforce ownership, invert positions, and stop only moving covers', async (t) => {
   const { state, command, gladys, device, feature, createAll } = await setup(t);
   assert.equal((await command('Switched consumer', 'binary', 1)).success, false);

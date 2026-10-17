@@ -25,6 +25,12 @@ propose les canaux pris en charge : créez les canaux souhaités et attribuez le
 pièces. Un actionneur multicanal peut produire plusieurs entrées. L’intégration
 ne crée ni ne supprime automatiquement les appareils de l’utilisateur.
 
+Les canaux de même nom sur un appareil reçoivent leur adresse API dans la
+découverte, par exemple `Double bouton [ch0000]` et `[ch0003]`. Ce n’est pas une
+indication haut/bas : REST ne fournit pas cette correspondance physique et une
+bascule peut émettre plusieurs actions sur un seul canal. Les appareils déjà
+créés gardent leur nom ; vous pouvez les renommer dans Gladys.
+
 ## Commandes et boutons
 
 Position et ouverture des lamelles : **0 % fermé, 100 % ouvert**. Les lamelles
