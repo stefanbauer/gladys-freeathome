@@ -7,10 +7,17 @@ und Jalousien sowie Wand-/Paneltaster als Auslöser für Gladys-Szenen.
 
 ## Einrichtung
 
-Benötigt werden Gladys ab 5.1.0, ein kompatibler System Access Point mit aktivierter
+Die Integration läuft in einem eigenen **Linux-Docker-Container unter Gladys**.
+Gladys übernimmt Start, Neustart, Protokolle und Integrationstoken. Nutzer brauchen
+weder macOS noch Node.js auf ihrem Rechner, ein Quellcodeverzeichnis oder `.env`.
+Es gibt noch kein veröffentlichtes Image und keinen Store-Eintrag. Für private
+Tests das selbst gebaute Image im Gladys-Entwicklermodus installieren; die
+[Entwicklungsanleitung](development.md) ist von der normalen Einrichtung getrennt.
+
+Benötigt werden Gladys ab 5.1.0 mit Docker, ein kompatibler System Access Point mit aktivierter
 lokaler API, seine Adresse einschließlich `http://` oder `https://`, der
 API-Benutzername aus free@home next und dessen Passwort. Beide Zugangsdaten sind
-in Gladys Geheimnisfelder. Sie sind vom eigenen Gladys-Integrationstoken getrennt.
+in Gladys unter „Konfiguration“ einzugeben, als Geheimnisfelder. Sie sind vom eigenen Gladys-Integrationstoken getrennt.
 Keine Zugangsdaten im Chat oder in Screenshots teilen.
 
 Nach dem Speichern der Konfiguration erscheint der Verbindungsstatus. Der
@@ -57,18 +64,11 @@ Hardware geprüft. Gruppen, virtuelle Geräte, free@home-Szenen und weitere
 Sensor-/Heizungsfunktionen gehören nicht zu diesem Umfang. Kein Store-Eintrag
 und keine Veröffentlichung.
 
-## Automatischer Start auf dem Mac
+## Betrieb und Updates
 
-Nach der eigenen lokalen Registrierung den manuellen Integrationsprozess
-beenden und `npm run service:install` ausführen. Ein eigener Benutzer-LaunchAgent
-startet die Integration bei Anmeldung und nach Prozessende erneut. Status:
-`npm run service:status`; Neustart: `npm run service:restart`; Entfernen und
-Beenden: `npm run service:uninstall`. Registrierung und Geräte bleiben erhalten.
-Logs liegen geschützt unter `data/runtime.log`; Zugangsdaten bleiben in `.env`,
-nicht in der plist. Nicht gleichzeitig `npm start` ausführen.
-
-Gladys und Docker starten weiterhin separat. Bei Abmeldung oder schlafendem Mac
-läuft die Integration nicht; dies ist kein 24/7-Serverbetrieb. Nach einem Wechsel
-des Node-Pfads oder Projektordners den LaunchAgent vom bisherigen Ordner aus
-entfernen und neu installieren. Einzelheiten und die geschützten Eingabedialoge
-stehen im [README](../README.md#4-native-macos-autostart).
+Start/Stopp, Neustart, Logs und Updates erfolgen über Gladys. Der Gladys-/Docker-
+Host muss laufen; der Entwicklerrechner wird nicht benötigt. Für Updates die
+Updatefunktion verwenden, nicht deinstallieren: Eine Deinstallation in Gladys
+löscht auch Registrierung, Konfiguration und Geräte. Der Container erhält seine
+Konfiguration aus Gladys, enthält keine persönlichen Zugangsdaten und benötigt
+keine lokalen persistenten Dateien.

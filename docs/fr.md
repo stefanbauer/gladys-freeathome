@@ -7,9 +7,16 @@ muraux ou de panneaux comme déclencheurs de scènes Gladys.
 
 ## Configuration
 
-Il faut Gladys 5.1.0+, un SysAP compatible dont l’API locale est activée, son
+L’intégration fonctionne dans son propre **conteneur Docker Linux supervisé par
+Gladys**. Gladys gère le démarrage, les redémarrages, les journaux et le jeton.
+L’utilisateur n’a besoin ni de macOS, ni de Node.js sur son ordinateur, ni du code
+source ou d’un fichier `.env`. Aucune image ni fiche Store n’est encore publiée.
+Pour les essais privés, installez une image construite localement en mode
+développeur Gladys ; voir le [guide de développement](development.md) séparé.
+
+Il faut Gladys 5.1.0+ avec Docker, un SysAP compatible dont l’API locale est activée, son
 origine avec `http://` ou `https://`, le nom d’utilisateur API indiqué dans
-free@home next et son mot de passe. Les deux identifiants sont des champs secrets,
+free@home next et son mot de passe. Saisissez ces identifiants dans les champs secrets de Configuration dans Gladys,
 distincts du jeton Gladys propre à cette intégration. Ne partagez pas ces valeurs.
 
 Enregistrez la configuration et vérifiez le statut. Le bouton de test vérifie
@@ -53,19 +60,11 @@ séparée restent à tester sur matériel réel. Groupes, appareils virtuels, sc
 free@home, chauffage et autres capteurs sont hors périmètre. Projet privé sans
 publication ni Store.
 
-## Démarrage automatique sur Mac
+## Fonctionnement et mises à jour
 
-Après l’inscription locale propre à cette intégration, arrêtez son processus
-manuel puis lancez `npm run service:install`. Un LaunchAgent utilisateur dédié
-démarre à l’ouverture de session et relance le processus après sa fin. Utilisez
-`npm run service:status`, `npm run service:restart` et `npm run service:uninstall`
-pour consulter, redémarrer ou supprimer ce service. La suppression conserve
-l’inscription et les appareils. Les journaux protégés sont dans `data/runtime.log` ;
-les secrets restent dans `.env`, jamais dans le plist. Ne lancez pas `npm start`
-en parallèle.
-
-Gladys et Docker doivent toujours démarrer séparément. Ce n’est pas un service
-système permanent : l’intégration ne fonctionne pas pendant la veille ou après
-fermeture de session. Désinstallez depuis l’ancien dossier puis réinstallez après
-un changement de chemin du projet ou de Node. Voir le
-[README](../README.md#4-native-macos-autostart) pour les détails et la saisie protégée.
+Utilisez la supervision Gladys pour démarrer/arrêter, redémarrer, consulter les
+journaux et mettre à jour. L’hôte Gladys/Docker doit fonctionner, pas l’ordinateur
+du développeur. Utilisez la mise à jour plutôt qu’une désinstallation : dans
+Gladys, désinstaller supprime aussi l’inscription, la configuration et les
+appareils. L’image ne contient aucun identifiant personnel. La configuration
+vient de Gladys ; aucun fichier persistant local n’est nécessaire.

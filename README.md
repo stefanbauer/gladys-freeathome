@@ -26,10 +26,9 @@ other side of the tested button and the separate downward command remain
 
 ## Requirements
 
-- Node.js **24**; `nvm use` if nvm is available. Install with `npm ci`.
-- Gladys **5.1.0+**, including external-integration scene triggers.
+- Gladys **5.1.0+** with Docker and external-integration scene triggers.
 - A SysAP with the official local API enabled (ABB documents SysAP 2.0,
-  firmware 2.6.0+), reachable from the integration process/container.
+  firmware 2.6.0+), reachable from the integration container.
 - Local API username from **free@home next → More → free@home Settings → Local API**
   and its password. This may differ from the normal display name.
 
@@ -38,68 +37,32 @@ Prefer HTTPS with a trusted certificate. Private CAs can be supplied through
 TLS verification is never disabled. Basic auth over HTTP is **not encrypted**:
 use HTTP only consciously on a trusted LAN. Never expose the API to the Internet.
 
-## Local development on the Mac
+## Installation and operation
 
-Gladys runs separately in `../gladys`, API port **1443**, frontend port **1444**.
-Core and `../gladys-ff-agent` remain unchanged. This integration has its **own**
-registration, tokens and native process. Never borrow another integration's
-credentials. Do not start a second SDK process under the same identity.
+The integration runs **inside its own Linux Docker container, supervised by
+Gladys**. Users configure it in Gladys, not in a terminal. No macOS service,
+native Node installation, source checkout, `.env` or developer login is needed
+on the user's machine. Gladys injects the SDK URL, selector and integration
+token; the runtime obtains controller settings from Gladys. No controller
+address, credentials or device identifiers are built into the image.
 
-### 1. Store and check controller access
+**Current availability:** there is no published image or Store listing yet.
+For a private test, build the image on the Docker daemon used by Gladys and
+install it using Gladys' **developer mode → install from a Docker image**.
+Use `gladys-freeathome-dev:0.1.0` and the supplied
+`gladys-assistant-integration.json`. See the separate
+[development guide](docs/development.md) for building and iterating. A future
+public release must provide a pullable, versioned image before Store installation
+can be offered; these instructions do not imply that publication has happened.
 
-```sh
-nvm use
-npm ci
-npm run setup:controller
-npm run check:controller
-```
+In this integration's **Configuration** tab, enter the SysAP origin (including
+`http://` or `https://`), local API username and password. The credentials are
+Gladys secret fields, separate from the integration token. Save and check the
+connection status: the test action checks REST access only; a connected status
+also confirms the WebSocket subscription. Startup, discovery and configuration
+tests do not operate devices or change the free@home installation.
 
-Run setup in an interactive Mac terminal. It asks for the controller origin
-(including `http://` or `https://`); username and password are hidden. It makes
-no network request, refuses to overwrite an existing file, and saves ignored
-`data/controller.json` with mode **600** inside a **700** directory. For later
-changes edit that file locally. The check only reads configuration and prints
-aggregate counts, never names, IDs, addresses or credentials.
-
-These are plaintext local files protected by permissions, **not encryption**.
-Never paste their contents, raw API responses or tokens into chat/issues.
-
-### 2. Register this integration with local Gladys
-
-```sh
-npm run dev:login
-npm run dev:configure
-npm start
-```
-
-`dev:login` asks for the **local Gladys admin** email and password (both hidden).
-It stores only its own refresh session in ignored `data/dev-session.json`,
-builds an idle development image, installs it through the supported local-image
-developer API, records its returned selector, and writes `.env` with its own
-integration token. Private files use mode 600. No admin password is saved.
-
-`dev:configure` reads the existing private controller file, validates it read-only,
-and copies those settings **only to this integration's** Gladys configuration.
-Alternatively enter the settings in Gladys' generated Configuration tab.
-`npm start` runs the actual SDK process natively. Its controller subscription only
-reads until a user explicitly sends an actuator command from Gladys.
-
-The development-only image `gladys-freeathome-host-dev:0.1.0` is an idle registration
-container, **not the integration runtime**. Its embedded manifest is synchronized
-by `npm run dev:sync` after manifest changes. `dev:connect` refreshes `.env` from
-the recorded, verified container. `dev:prepare` only builds the idle image.
-Helpers refuse non-loopback Gladys instances, foreign registrations/images and
-an `.env` belonging to another selector. If a registration succeeds but its local
-receipt is lost, inspect Gladys rather than blindly reinstalling.
-
-The default selector is derived by Gladys from `free@home` (`ext-dev-freehome`,
-possibly with a collision suffix); the helper uses the actual returned selector.
-Do not infer it from the repository name.
-
-### 3. Discover devices and configure scenes
-
-Open this integration in Gladys on the Mac's frontend port **1444**. Discovery
-offers supported **channels**, not just one entry per physical actuator. Create
+Discovery offers supported **channels**, not just one entry per actuator. Create
 only the channels you need, assign rooms and names there. The integration never
 creates/deletes user devices itself. Only created features receive states and
 only created, owned actuator features accept commands.
@@ -111,47 +74,10 @@ an action. Leaving the action empty matches any action from that button.
 Do not use last-action state changes as a press trigger: two equal presses
 must fire twice, while a state display deliberately deduplicates equal values.
 
-### 4. Native macOS autostart
-
-For this private Mac setup, a **user LaunchAgent** supervises the same native SDK
-process. It reuses this checkout's registration and protected `.env`; it does not
-register a second integration or put tokens into the plist. Stop only this
-checkout's manually running `npm start` before installation. The helper refuses
-to install alongside a native runtime or to modify another checkout's LaunchAgent.
-
-```sh
-nvm use
-npm run service:install
-npm run service:status
-npm run service:restart
-```
-
-The job is `com.gladysassistant.freeathome`, under the current user's
-`~/Library/LaunchAgents`. It starts at **user login**, restarts after process exit
-with a 15-second restart throttle, and writes private logs to `data/runtime.log`.
-Status reports the launchd job/PID, **not** controller connectivity; check the
-connection badge in Gladys as well. Install is idempotent. Automatic respawn,
-explicit restart, uninstall/reinstall and preservation of devices/states were
-verified on the real local stack without issuing device commands.
-
-This is not a system daemon or a 24/7 server setup: it does not run while logged
-out or asleep, and it does **not** start Gladys or Docker. Their startup remains
-separate; launchd keeps retrying this process if Gladys is unavailable. The Node
-executable and checkout path are fixed at installation. After moving the checkout
-or removing/upgrading that Node installation, uninstall from the original
-checkout and reinstall with Node 24 before removing the old paths.
-
-To disable autostart and stop the managed process before manual development:
-
-```sh
-npm run service:uninstall
-npm start
-```
-
-Uninstall removes only this LaunchAgent, not its Gladys registration, credentials,
-devices or logs. Never run `npm start` alongside the loaded LaunchAgent. The
-container runtime below remains the intended packaging for a future dedicated
-Gladys host; no migration or publication is performed by these commands.
+Start, stop, restart, logs and updates belong to Gladys' supervision controls.
+Use **update**, not uninstall/reinstall, to retain registration, devices and
+configuration. Uninstall in Gladys deletes them. The host running Gladys/Docker
+must be available for operation; this does not depend on a developer's laptop.
 
 ## Device semantics and limits
 
@@ -181,13 +107,12 @@ Gladys host; no migration or publication is performed by these commands.
 - Gladys limits states and scene events independently to **300/minute**. State
   changes use the SDK's deduplication/batching; button events are never deduplicated.
 
-## Verification and local runtime image
+## Verification
 
 ```sh
 npm test
 npm run lint
 npm run format:check
-docker build -t gladys-freeathome-dev:0.1.0 .
 ```
 
 Tests use the official SDK fake and an authenticated synthetic HTTP/WebSocket
@@ -195,11 +120,15 @@ server. They cover asymmetric positions, actual pairing-ID resolution, command
 validation/ownership, safe idle-stop behavior, duplicate button events and
 reconnect. No test calls the real installation.
 
-The **runtime** image runs as `node` with `dumb-init`, supports a read-only root
-filesystem and writes only under `/data`. Its build context excludes credentials,
-local data and tests. Install this runtime image with the manifest in Gladys
-developer mode for a separate containerized test, **not alongside the native
-process using the same registration**. No registry or publishing workflow exists.
+The image runs as `node` with `dumb-init` and supports Gladys' read-only root
+filesystem with no Linux capabilities. It requires no local persistence: config
+comes from Gladys, logs go to stdout/stderr. Build context excludes credentials,
+local data and developer/test scripts. The same ten tests passed inside
+`linux/arm64` and emulated `linux/amd64` containers. The Gladys-managed arm64
+container was also checked against the real SysAP, including restart and
+preservation of the existing four devices, their settings and states. No new
+actuator commands were sent for that container migration check. An actual amd64
+Gladys host and a multi-architecture published image have not been verified.
 
 ## References
 

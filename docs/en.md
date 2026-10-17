@@ -6,9 +6,15 @@ lights, blinds/shutters and wall/panel button actions for Gladys scenes.
 
 ## Setup
 
-Use Gladys 5.1.0+, a compatible SysAP with its local API enabled, the controller
+The integration runs in its own **Linux Docker container supervised by Gladys**.
+Gladys manages startup, restart, logs and integration credentials. Users need no
+macOS, host Node.js, source checkout or `.env`. No image or Store listing has
+been published yet. For private testing, install a locally built image in Gladys
+developer mode; see the separate [development guide](development.md).
+
+Use Gladys 5.1.0+ with Docker, a compatible SysAP with its local API enabled, the controller
 origin including `http://` or `https://`, the API username shown in free@home next
-and its password. Both API credentials are secret fields, separate from this
+and its password. Enter both credentials in Gladys' Configuration secret fields, separate from this
 integration's own Gladys token. Never share credentials or raw configuration.
 
 Save settings and check connection status. The test button checks REST access
@@ -52,17 +58,11 @@ the separate down command have not been checked on real hardware. Groups,
 virtual devices, free@home scenes, HVAC and other sensors are outside this scope.
 No Store listing or release exists.
 
-## Mac autostart
+## Operation and updates
 
-After setting up this integration's own local registration, stop its manual
-runtime and run `npm run service:install`. A dedicated user LaunchAgent starts it
-at login and restarts it after exit. Use `npm run service:status`,
-`npm run service:restart` or `npm run service:uninstall` to inspect, restart or
-remove it. Uninstall preserves registration and devices. Private logs live in
-`data/runtime.log`; credentials stay in `.env`, never in the plist. Do not also
-run `npm start` while the agent is loaded.
-
-Gladys and Docker still need separate startup. This is not a 24/7 system daemon:
-the integration does not run while logged out or asleep. Uninstall from the old
-checkout and reinstall after changing its path or the installed Node executable.
-See the [README](../README.md#4-native-macos-autostart) for details and secure setup.
+Use Gladys' supervision controls for start/stop, restart, logs and updates. The
+Gladys/Docker host must be running; a developer's computer is not required.
+Use update, not uninstall/reinstall, to retain registration, configuration and
+devices: uninstalling in Gladys deletes them. The image contains no personal
+credentials. Runtime config comes from Gladys; no persistent local files are
+required.
