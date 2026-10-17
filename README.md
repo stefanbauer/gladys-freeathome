@@ -2,7 +2,7 @@
 
 ![Independent free@home integration artwork](cover.png)
 
-Private, standalone external integration using the official Gladys JavaScript
+Standalone external integration using the official Gladys JavaScript
 SDK and ABB's **local REST + WebSocket API**. No XMPP, cloud API, virtual-device
 registration or changes to the free@home installation.
 
@@ -28,7 +28,7 @@ On firmware 3.5.3, explicitly authorized hardware checks verified a switched lig
 absolute blind positioning, upward movement and stop, repeated identical button
 scene events, process restart and controller reconnection. Dimming, slats, the
 other side of the tested button and the separate downward command remain
-**synthetic-test coverage only**. The repository is not published or listed in the Store.
+**synthetic-test coverage only**. Source code is public; no Store listing exists.
 
 ## Requirements
 
@@ -156,5 +156,5 @@ Gladys host and a multi-architecture published image have not been verified.
 - [English](docs/en.md), [Français](docs/fr.md), [Deutsch](docs/de.md)
 
 `jheling/freeathome` and `kingsleyadam/local-abbfreeathome` informed protocol research;
-no Home Assistant code was copied. Pushes, PRs, publication and releases require
-new approval. The repository remains private and has no Store-discovery topic.
+no Home Assistant code was copied. Further pushes, PRs, image publication and
+releases require new approval. No Store-discovery topic is set.

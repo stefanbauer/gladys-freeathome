@@ -63,8 +63,8 @@ le firmware 3.5.3 ont vérifié l’éclairage commuté, le positionnement d’u
 montée/arrêt, les événements de bouton identiques répétés et le redémarrage/la
 reconnexion. Variation, lamelles, autre côté du bouton et commande de descente
 séparée restent à tester sur matériel réel. Groupes, appareils virtuels, scènes
-free@home, chauffage et autres capteurs sont hors périmètre. Projet privé sans
-publication ni Store.
+free@home, chauffage et autres capteurs sont hors périmètre. Code source public,
+sans image publiée, version publiée ni fiche Store.
 
 ## Fonctionnement et mises à jour
 

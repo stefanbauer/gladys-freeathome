@@ -67,8 +67,8 @@ Zusätzlich zu simulierten Tests wurden mit ausdrücklicher Freigabe an Firmware
 Taster-Szenenereignisse und Neustart/Wiederverbindung geprüft. Dimmen, Lamellen,
 die andere Tasterseite und der separate Abwärtsbefehl sind noch nicht an echter
 Hardware geprüft. Gruppen, virtuelle Geräte, free@home-Szenen und weitere
-Sensor-/Heizungsfunktionen gehören nicht zu diesem Umfang. Kein Store-Eintrag
-und keine Veröffentlichung.
+Sensor-/Heizungsfunktionen gehören nicht zu diesem Umfang. Der Quellcode ist
+öffentlich; es gibt noch kein veröffentlichtes Image, Release oder Store-Angebot.
 
 ## Betrieb und Updates
 
