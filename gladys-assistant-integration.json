@@ -1,0 +1,138 @@
+{
+  "manifest_version": 1,
+  "type": "device",
+  "name": "free@home",
+  "description": {
+    "en": "Control local free@home lights, switched outputs and blinds; use button events in scenes.",
+    "fr": "Commandez éclairages, sorties et stores free@home locaux ; utilisez les boutons dans les scènes.",
+    "de": "Lokale free@home-Lichter, Schaltausgänge und Rollos steuern; Taster für Szenen nutzen."
+  },
+  "version": "0.1.0",
+  "docker_image": "gladys-freeathome-dev:0.1.0",
+  "gladys_version": ">=5.1.0",
+  "transports": ["local"],
+  "config_schema": [
+    {
+      "key": "controller_url",
+      "type": "string",
+      "required": true,
+      "label": { "en": "Controller URL", "fr": "URL du contrôleur", "de": "Controller-Adresse" }
+    },
+    {
+      "key": "api_username",
+      "type": "secret",
+      "required": true,
+      "label": {
+        "en": "Local API username",
+        "fr": "Utilisateur API locale",
+        "de": "Lokaler API-Benutzername"
+      }
+    },
+    {
+      "key": "api_password",
+      "type": "secret",
+      "required": true,
+      "label": {
+        "en": "Local API password",
+        "fr": "Mot de passe API locale",
+        "de": "Lokales API-Passwort"
+      }
+    }
+  ],
+  "scene_triggers": [
+    {
+      "key": "button_action",
+      "label": { "en": "Button action", "fr": "Action d’un bouton", "de": "Tasteraktion" },
+      "description": {
+        "en": "A live action from a free@home button, not an actuator state change.",
+        "fr": "Une action en direct d’un bouton free@home, pas un changement d’état d’actionneur.",
+        "de": "Eine aktuelle free@home-Tasteraktion, keine Zustandsänderung eines Aktors."
+      },
+      "fields": [
+        {
+          "key": "device",
+          "type": "select",
+          "source": "devices",
+          "required": true,
+          "label": { "en": "Button device", "fr": "Appareil bouton", "de": "Tastergerät" }
+        },
+        {
+          "key": "action",
+          "type": "select",
+          "label": {
+            "en": "Action (empty = any)",
+            "fr": "Action (vide = toutes)",
+            "de": "Aktion (leer = beliebig)"
+          },
+          "options": [
+            { "value": "on", "label": { "en": "On", "fr": "Allumer", "de": "Ein" } },
+            { "value": "off", "label": { "en": "Off", "fr": "Éteindre", "de": "Aus" } },
+            {
+              "value": "dim_up",
+              "label": { "en": "Dim up", "fr": "Augmenter la luminosité", "de": "Heller dimmen" }
+            },
+            {
+              "value": "dim_down",
+              "label": { "en": "Dim down", "fr": "Diminuer la luminosité", "de": "Dunkler dimmen" }
+            },
+            {
+              "value": "dim_stop",
+              "label": {
+                "en": "Stop dimming",
+                "fr": "Arrêter la variation",
+                "de": "Dimmen stoppen"
+              }
+            },
+            {
+              "value": "open",
+              "label": { "en": "Open / Up", "fr": "Ouvrir / Monter", "de": "Auf" }
+            },
+            {
+              "value": "close",
+              "label": { "en": "Close / Down", "fr": "Fermer / Descendre", "de": "Ab" }
+            },
+            {
+              "value": "stop_up",
+              "label": {
+                "en": "Stop / Step up",
+                "fr": "Arrêt / Pas vers le haut",
+                "de": "Stopp / Schritt auf"
+              }
+            },
+            {
+              "value": "stop_down",
+              "label": {
+                "en": "Stop / Step down",
+                "fr": "Arrêt / Pas vers le bas",
+                "de": "Stopp / Schritt ab"
+              }
+            }
+          ]
+        }
+      ],
+      "variables": [
+        {
+          "key": "device",
+          "type": "string",
+          "label": { "en": "Button device", "fr": "Appareil bouton", "de": "Tastergerät" }
+        },
+        {
+          "key": "action",
+          "type": "string",
+          "label": { "en": "Action", "fr": "Action", "de": "Aktion" }
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "key": "test_connection",
+      "label": {
+        "en": "Test connection (read-only)",
+        "fr": "Tester la connexion (lecture seule)",
+        "de": "Verbindung testen (nur lesen)"
+      },
+      "timeout_seconds": 15
+    }
+  ]
+}

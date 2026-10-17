@@ -1,0 +1,28 @@
+{
+  "name": "gladys-freeathome",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Local free@home lights, switched outputs, blinds and button events for Gladys Assistant.",
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "start": "node --env-file-if-exists=.env index.js",
+    "test": "node --test",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "dependencies": {
+    "@gladysassistant/integration-sdk": "^0.15.0",
+    "ws": "^8.22.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.12.0",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^17.13.0",
+    "prettier": "^3.9.9"
+  }
+}

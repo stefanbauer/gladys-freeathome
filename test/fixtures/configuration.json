@@ -1,0 +1,70 @@
+{
+  "synthetic-system": {
+    "devices": {
+      "SYNTHETIC": {
+        "displayName": "Synthetic multifunction actuator",
+        "channels": {
+          "ch0000": {
+            "displayName": "Switched consumer",
+            "functionID": "7",
+            "inputs": { "idp0009": { "pairingID": 1, "value": "0" } },
+            "outputs": { "odp0011": { "pairingID": 256, "value": "1" } }
+          },
+          "ch0001": {
+            "displayName": "Dimmable light",
+            "functionID": "0012",
+            "inputs": { "idp0002": { "pairingID": 1 }, "idp0003": { "pairingID": 17 } },
+            "outputs": {
+              "odp0002": { "pairingID": 256, "value": "1" },
+              "odp0004": { "pairingID": 272, "value": "37.25" }
+            }
+          },
+          "ch0002": {
+            "displayName": "Blind with slats",
+            "functionID": "61",
+            "inputs": {
+              "idp0011": { "pairingID": 32 },
+              "idp0014": { "pairingID": 33 },
+              "idp0017": { "pairingID": 35 },
+              "idp0018": { "pairingID": 36 }
+            },
+            "outputs": {
+              "odp0009": { "pairingID": 288, "value": "3" },
+              "odp0010": { "pairingID": 289, "value": "27" },
+              "odp0012": { "pairingID": 290, "value": "68" }
+            }
+          },
+          "ch0003": {
+            "displayName": "Dimming button",
+            "functionID": "1",
+            "outputs": {
+              "odp0005": { "pairingID": 1, "value": "1" },
+              "odp0008": { "pairingID": 16, "value": "9" }
+            }
+          },
+          "ch0004": {
+            "displayName": "Blind button",
+            "functionID": "3",
+            "outputs": {
+              "odp0005": { "pairingID": 32, "value": "0" },
+              "odp0008": { "pairingID": 33, "value": "1" }
+            }
+          },
+          "ch0005": {
+            "displayName": "Read-only output",
+            "functionID": "0007",
+            "outputs": { "odp0002": { "pairingID": 256, "value": "0" } }
+          },
+          "ch0006": {
+            "functionID": "4001",
+            "outputs": { "odp0000": { "pairingID": 1, "value": "1" } }
+          },
+          "ch0007": {
+            "functionID": "23",
+            "outputs": { "odp0000": { "pairingID": 304, "value": "21" } }
+          }
+        }
+      }
+    }
+  }
+}

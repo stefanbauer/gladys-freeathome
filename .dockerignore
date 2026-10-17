@@ -1,0 +1,10 @@
+.git
+.amp
+.env
+.env.*
+data
+node_modules
+coverage
+test
+scripts
+*.log
