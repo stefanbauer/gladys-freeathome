@@ -7,13 +7,16 @@ for supported functions, hardware verification and known limitations.
 
 ## Current delivery state and approvals
 
-Version **0.1.0 was published on 2026-10-19** using the manual `initial` workflow.
+Version **1.0.0 was published on 2026-10-19** using the manual `major` workflow,
+following the initial `0.1.0` release earlier that day.
 The source repository and GHCR package are public. Anonymous downloads and the
 11 runtime tests passed for both AMD64 and ARM64; full Store validation and a
 separate GitHub-URL installation with real controller discovery and restart
 also passed. The temporary registration was removed without altering existing
 registrations or devices. No device commands were sent during release checks.
-Store discovery is deliberately disabled; `1.0.0` is not yet published.
+The approved `gladys-assistant-integration` topic is set. At the post-release
+check the published catalog had not yet refreshed to include this repository;
+topic activation is not proof of completed indexing.
 
 Preparing files and running local checks do not authorize publication. Obtain
 explicit approval before pushing source, triggering a release or publishing an
@@ -91,17 +94,16 @@ needs explicit approval, including tests of a production installation.
 After approval and after pushing the checked source, use **Actions → Release →
 Run workflow**, choose branch `main`, and select the release type:
 
-| Selection | Current `0.1.0` becomes | Meaning                                           |
-| --------- | ----------------------- | ------------------------------------------------- |
-| `initial` | `0.1.0`                 | First release, only before any version tag exists |
-| `patch`   | `0.1.1`                 | Compatible fixes                                  |
-| `minor`   | `0.2.0`                 | Compatible additions                              |
-| `major`   | `1.0.0`                 | Explicit major version transition                 |
+| Selection | Current `1.0.0` becomes | Meaning                            |
+| --------- | ----------------------- | ---------------------------------- |
+| `initial` | Unavailable             | Only before any version tag exists |
+| `patch`   | `1.0.1`                 | Compatible fixes                   |
+| `minor`   | `1.1.0`                 | Compatible additions               |
+| `major`   | `2.0.0`                 | Explicit major version transition  |
 
-`initial` records the completed first publication above and is no longer
-available. For the planned stable launch from `0.1.0`, choose `major` only after
-approval. Store discovery remains a separate gate; the release workflow never
-adds the repository topic.
+`initial` kept `0.1.0` for the first publication and is no longer available.
+The stable launch used `major` to advance `0.1.0` to `1.0.0`. Store discovery
+remains a separate gate; the release workflow never adds the repository topic.
 
 The workflow does not infer release types from commit messages. Normal
 development does not change the package version. `initial` keeps the current
@@ -147,7 +149,7 @@ Verify the exact released image anonymously without changing the user's Docker
 login. Replace the version below for later releases:
 
 ```sh
-image=ghcr.io/stefanbauer/gladys-freeathome:0.1.0
+image=ghcr.io/stefanbauer/gladys-freeathome:1.0.0
 anonymous_config="$(mktemp -d)"
 trap 'rm -rf "$anonymous_config"' EXIT
 docker --config "$anonymous_config" manifest inspect "$image"
@@ -190,10 +192,18 @@ verified and catalog indexing are different milestones.
 
 ## 5. Optional Store discovery
 
-Store discovery remains **not approved**. Only after separate approval add the
-repository topic `gladys-assistant-integration`. It is not a Git tag or issue
-label, and no workflow sets it. The catalog normally indexes hourly; verify both
-its index and rejection report before claiming the integration is listed.
+Store discovery was explicitly approved for `1.0.0`, and the repository topic
+`gladys-assistant-integration` was set after public image and installation checks.
+It is not a Git tag or issue label, and no workflow sets it. The catalog normally
+indexes hourly; verify both its index and rejection report before claiming the
+integration is listed:
+
+- https://integration-store-storage.gladysassistant.com/index.json
+- https://integration-store-storage.gladysassistant.com/rejected.json
+
+Local `.amp/in/` reports, screenshots and diagnostic logs are never release
+artifacts. No `.amp` path has been tracked in this repository's Git history;
+shared Git rules exclude `.amp/in/`, and Docker excludes all of `.amp` and `data/`.
 
 Required documents are `docs/en.md` and `docs/fr.md`, each at least 300 characters.
 The public root manifest must validate and its image must be anonymously pullable.

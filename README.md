@@ -29,7 +29,7 @@ absolute blind positioning, upward movement and stop, repeated identical button
 scene events, process restart and controller reconnection. A subsequent manual
 dimmer test confirmed 31% and 73% brightness with matching feedback and off at 0%.
 Slats, the other side of the tested button and the separate downward command remain
-**synthetic-test coverage only**. Source code is public; no Store listing exists.
+**synthetic-test coverage only**. Source code and release images are public.
 
 ## Requirements
 
@@ -53,12 +53,13 @@ on the user's machine. Gladys injects the SDK URL, selector and integration
 token; the runtime obtains controller settings from Gladys. No controller
 address, credentials or device identifiers are built into the image.
 
-**Current availability:** [release 0.1.0](https://github.com/stefanbauer/gladys-freeathome/releases/tag/0.1.0)
+**Current availability:** [release 1.0.0](https://github.com/stefanbauer/gladys-freeathome/releases/tag/1.0.0)
 and its public AMD64/ARM64 image are available. In Gladys, install using the
 GitHub repository URL `https://github.com/stefanbauer/gladys-freeathome`.
-The versioned image is `ghcr.io/stefanbauer/gladys-freeathome:0.1.0`.
+The versioned image is `ghcr.io/stefanbauer/gladys-freeathome:1.0.0`.
 GitHub-URL installation has been verified on the local development instance;
-Store discovery remains deliberately disabled. No Store listing exists yet.
+Store discovery is enabled through the repository topic. Catalog visibility
+depends on the next successful hourly index and the Gladys catalog cache.
 See the separate [development guide](docs/development.md) for local builds and
 the [release guide](docs/releasing.md) for maintenance. Normal pushes run CI,
 not publication.
@@ -170,7 +171,13 @@ and a native GitHub-hosted runner in CI.
   an atomic-push conflict. GitHub-hosted CI and the first release workflow also
   passed, checking the exact release commit before publication.
 
-### Published 0.1.0 verification (2026-10-19)
+### Published release verification (2026-10-19)
+
+These checks passed for both `0.1.0` and `1.0.0`. Stable `1.0.0` does not change
+device behavior; the hardware coverage limits above still apply. Both stable
+image variants were additionally checked to contain no local `.amp`, `.env` or
+`data/` files. Git history contains no tracked `.amp` files; local review outputs
+under `.amp/in/` are excluded by shared Git rules and Docker ignores all of `.amp`.
 
 - Both architecture images were anonymously downloaded with an empty temporary
   Docker authentication configuration; all **11 runtime tests per platform**
@@ -199,7 +206,8 @@ and a native GitHub-hosted runner in CI.
 
 `jheling/freeathome` and `kingsleyadam/local-abbfreeathome` informed protocol research;
 no Home Assistant code was copied. Further pushes, PRs, image publication and
-releases require new approval. No Store-discovery topic is set.
+releases require new approval. Store discovery was explicitly approved and the
+`gladys-assistant-integration` topic was set after validating release `1.0.0`.
 
 Package and image metadata declare `Apache-2.0`, matching FF-Agent. A standalone
 license file is deliberately deferred. Third-party dependencies retain their own

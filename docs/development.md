@@ -19,7 +19,7 @@ npm run dev:prepare
 ```
 
 On a new checkout, `dev:prepare` builds the real `Dockerfile` as
-`ghcr.io/stefanbauer/gladys-freeathome:0.1.0`, with the manifest embedded in the official
+`ghcr.io/stefanbauer/gladys-freeathome:1.0.0`, with the manifest embedded in the official
 `io.gladysassistant.manifest` image label. It does not install or publish anything.
 In Gladys' developer-mode installation form, select that local image and supply
 the manifest if requested. Configure the controller in Gladys. No token needs
@@ -29,7 +29,7 @@ Local builds target the Docker daemon's architecture. Cross-build a private
 test image when the target differs, for example:
 
 ```sh
-docker build --platform linux/amd64 -t ghcr.io/stefanbauer/gladys-freeathome:0.1.0 .
+docker build --platform linux/amd64 -t ghcr.io/stefanbauer/gladys-freeathome:1.0.0 .
 ```
 
 For this direct build, pass `gladys-assistant-integration.json` explicitly at

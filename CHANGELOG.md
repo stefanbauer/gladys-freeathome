@@ -4,6 +4,11 @@ Changes to free@home for Gladys Assistant. Unreleased entries are not yet publis
 
 ## [Unreleased]
 
+### Documentation
+
+- Record verified stable images, GitHub-URL installation, local-artifact privacy
+  checks and approved Store-topic activation; catalog indexing remains separate.
+
 ## [1.0.0] - 2026-10-19
 
 ### Stable release

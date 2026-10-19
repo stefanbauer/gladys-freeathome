@@ -10,10 +10,11 @@ muraux ou de panneaux comme déclencheurs de scènes Gladys.
 L’intégration fonctionne dans son propre **conteneur Docker Linux supervisé par
 Gladys**. Gladys gère le démarrage, les redémarrages, les journaux et le jeton.
 L’utilisateur n’a besoin ni de macOS, ni de Node.js sur son ordinateur, ni du code
-source ou d’un fichier `.env`. La version `0.1.0` est publiée avec une image
+source ou d’un fichier `.env`. La version `1.0.0` est publiée avec une image
 publique AMD64/ARM64. Dans Gladys, utilisez l’URL du dépôt GitHub
 `https://github.com/stefanbauer/gladys-freeathome` pour l’installation.
-Aucune fiche Store n’existe encore. Les compilations locales sont décrites
+La découverte Store est activée ; la visibilité dépend de la prochaine
+indexation réussie et du cache local. Les compilations locales sont décrites
 séparément dans le [guide de développement](development.md).
 
 Il faut Gladys 5.1.0+ avec Docker, un SysAP compatible dont l’API locale est activée, son
@@ -67,10 +68,10 @@ reconnexion. Un essai manuel supplémentaire a confirmé la variation à 31 % et
 73 % avec retour correspondant, et l’extinction à 0 %. Lamelles, autre côté du
 bouton et commande de descente séparée restent à tester sur matériel réel.
 Groupes, appareils virtuels, scènes
-free@home, chauffage et autres capteurs sont hors périmètre. Pour `0.1.0`, les
+free@home, chauffage et autres capteurs sont hors périmètre. Pour `1.0.0`, les
 téléchargements anonymes, la validation complète et l’installation par URL GitHub
-avec découverte du contrôleur et redémarrage ont réussi. La découverte Store
-reste volontairement désactivée.
+avec découverte du contrôleur et redémarrage ont réussi. Le comportement des
+appareils et les limites de vérification matérielle restent ceux de `0.1.0`.
 
 ## Fonctionnement et mises à jour
 

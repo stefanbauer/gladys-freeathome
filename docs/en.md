@@ -8,9 +8,10 @@ lights, blinds/shutters and wall/panel button actions for Gladys scenes.
 
 The integration runs in its own **Linux Docker container supervised by Gladys**.
 Gladys manages startup, restart, logs and integration credentials. Users need no
-macOS, host Node.js, source checkout or `.env`. Version `0.1.0` is published with
+macOS, host Node.js, source checkout or `.env`. Version `1.0.0` is published with
 a public AMD64/ARM64 image. Install in Gladys using the GitHub repository URL
-`https://github.com/stefanbauer/gladys-freeathome`. No Store listing exists yet.
+`https://github.com/stefanbauer/gladys-freeathome`. Store discovery is enabled;
+catalog visibility depends on the next successful indexing and local cache.
 Local builds are covered separately in the [development guide](development.md).
 
 Use Gladys 5.1.0+ with Docker, a compatible SysAP with its local API enabled, the controller
@@ -65,8 +66,8 @@ at 31% and 73% with matching feedback and off at 0%. Slats, the other button sid
 the separate down command have not been checked on real hardware. Groups,
 virtual devices, free@home scenes, HVAC and other sensors are outside this scope.
 Anonymous image downloads, full metadata/image validation and GitHub-URL
-installation with controller discovery and restart have passed for `0.1.0`.
-Store discovery is deliberately disabled.
+installation with controller discovery and restart have passed for `1.0.0`.
+Device behavior and the hardware verification limits are unchanged from `0.1.0`.
 
 ## Operation and updates
 
