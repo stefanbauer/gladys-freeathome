@@ -17,8 +17,9 @@ image. Making the GHCR package public is a separate, irreversible visibility
 decision. Adding the `gladys-assistant-integration` repository topic needs separate
 approval; it is not required for GitHub-URL installation.
 
-MIT is the prepared source license. Review it before the first publication;
-dependencies retain their own licenses and vendor trademarks are not licensed.
+Package and image metadata declare `Apache-2.0`, matching FF-Agent. A standalone
+license file is deliberately deferred at the maintainer's request; dependencies
+retain their own licenses and vendor trademarks are not licensed.
 
 ## Workflow responsibilities
 

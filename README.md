@@ -189,5 +189,6 @@ Gladys host and a multi-architecture published image have not been verified.
 no Home Assistant code was copied. Further pushes, PRs, image publication and
 releases require new approval. No Store-discovery topic is set.
 
-Source code is licensed under [MIT](LICENSE). Third-party dependencies retain
-their own licenses; the license grants no rights to vendor trademarks.
+Package and image metadata declare `Apache-2.0`, matching FF-Agent. A standalone
+license file is deliberately deferred. Third-party dependencies retain their own
+licenses; vendor trademark rights are not granted.

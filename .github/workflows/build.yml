@@ -51,5 +51,5 @@ jobs:
             org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
             org.opencontainers.image.revision=${{ inputs.ref }}
             org.opencontainers.image.version=${{ inputs.version }}
-            org.opencontainers.image.licenses=MIT
+            org.opencontainers.image.licenses=Apache-2.0
             io.gladysassistant.manifest=${{ steps.image.outputs.manifest }}
