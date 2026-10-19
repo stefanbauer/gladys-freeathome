@@ -1,0 +1,144 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - '[0-9]*.[0-9]*.[0-9]*'
+  workflow_dispatch:
+    inputs:
+      release-type:
+        description: initial keeps the current version; otherwise choose a version bump
+        required: true
+        type: choice
+        default: patch
+        options: [initial, patch, minor, major]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  # GITHUB_TOKEN tag pushes do not start another workflow. Continue this run.
+  prepare:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      version: ${{ steps.prepare.outputs.version }}
+      commit: ${{ steps.publish.outputs.commit }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - name: Prepare version and changelog
+        id: prepare
+        env:
+          RELEASE_TYPE: ${{ inputs.release-type }}
+        run: |
+          set -euo pipefail
+          if [ "$GITHUB_REF" != "refs/heads/main" ]; then
+            echo "::error::Run releases from main."
+            exit 1
+          fi
+          if [ "$RELEASE_TYPE" = "initial" ]; then
+            if [ -n "$(git tag --list '[0-9]*')" ]; then
+              echo "::error::initial is only available before the first version tag."
+              exit 1
+            fi
+            version="$(node -p "require('./package.json').version")"
+          else
+            version="$(npm version "$RELEASE_TYPE" --no-git-tag-version | tail -n1)"
+            version="${version#v}"
+          fi
+          if git show-ref --verify --quiet "refs/tags/${version}"; then
+            echo "::error::Version tag already exists; never overwrite a release."
+            exit 1
+          fi
+          image="ghcr.io/${GITHUB_REPOSITORY,,}:${version}"
+          node .github/scripts/release.mjs prepare "$version" "$image" \
+            "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}"
+          node .github/scripts/release.mjs check "$version" "$image"
+          echo "version=${version}" >> "$GITHUB_OUTPUT"
+      - name: Commit, tag and push atomically
+        id: publish
+        env:
+          VERSION: ${{ steps.prepare.outputs.version }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package.json package-lock.json gladys-assistant-integration.json CHANGELOG.md
+          git commit -m "chore(release): ${VERSION}"
+          git tag -a "$VERSION" -m "Release ${VERSION}"
+          git push --atomic origin HEAD:refs/heads/main "refs/tags/${VERSION}"
+          echo "commit=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+  candidate:
+    needs: prepare
+    if: ${{ !cancelled() && (needs.prepare.result == 'success' || needs.prepare.result == 'skipped') }}
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.candidate.outputs.version }}
+      commit: ${{ steps.candidate.outputs.commit }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ needs.prepare.outputs.commit || github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - name: Check tag and release metadata
+        id: candidate
+        env:
+          PREPARED_VERSION: ${{ needs.prepare.outputs.version }}
+        run: |
+          set -euo pipefail
+          tag="${PREPARED_VERSION:-$GITHUB_REF_NAME}"
+          if [[ ! "$tag" =~ ^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$ ]]; then
+            echo "::error::Release tags must be X.Y.Z without a prefix (stable versions only)."
+            exit 1
+          fi
+          git merge-base --is-ancestor HEAD origin/main
+          test "$(git rev-parse HEAD)" = "$(git rev-parse "refs/tags/${tag}^{commit}")"
+          version="$tag"
+          node .github/scripts/release.mjs check "$version" \
+            "ghcr.io/${GITHUB_REPOSITORY,,}:${version}"
+          echo "version=${version}" >> "$GITHUB_OUTPUT"
+          echo "commit=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+  checks:
+    needs: candidate
+    if: ${{ !cancelled() && needs.candidate.result == 'success' }}
+    uses: ./.github/workflows/ci.yml
+    with:
+      ref: ${{ needs.candidate.outputs.commit }}
+
+  build:
+    needs: [candidate, checks]
+    if: ${{ !cancelled() && needs.candidate.result == 'success' && needs.checks.result == 'success' }}
+    uses: ./.github/workflows/build.yml
+    permissions:
+      contents: read
+      packages: write
+    with:
+      version: ${{ needs.candidate.outputs.version }}
+      ref: ${{ needs.candidate.outputs.commit }}
+
+  github-release:
+    needs: [candidate, build]
+    if: ${{ !cancelled() && needs.candidate.result == 'success' && needs.build.result == 'success' }}
+    uses: ./.github/workflows/github-release.yml
+    permissions:
+      contents: write
+    with:
+      version: ${{ needs.candidate.outputs.version }}
+      ref: ${{ needs.candidate.outputs.commit }}

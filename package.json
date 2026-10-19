@@ -2,6 +2,7 @@
   "name": "gladys-freeathome",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
   "type": "module",
   "description": "Local free@home lights, switched outputs, blinds and button events for Gladys Assistant.",
   "engines": {

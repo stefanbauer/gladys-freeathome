@@ -1,0 +1,38 @@
+# No independent publishing entry point; requires successful image publication.
+name: GitHub release
+
+on:
+  workflow_call:
+    inputs:
+      version:
+        required: true
+        type: string
+      ref:
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.ref }}
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - name: Publish release notes
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          VERSION: ${{ inputs.version }}
+        run: |
+          set -euo pipefail
+          notes="${RUNNER_TEMP}/release-notes.md"
+          node .github/scripts/release.mjs notes "$VERSION" < CHANGELOG.md > "$notes"
+          test -s "$notes"
+          gh release create "$VERSION" --verify-tag --title "$VERSION" --notes-file "$notes"
