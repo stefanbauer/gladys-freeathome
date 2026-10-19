@@ -4,6 +4,8 @@ Changes to free@home for Gladys Assistant. Unreleased entries are not yet publis
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-10-19
+
 ### Added
 
 - Local REST and WebSocket integration for switched outputs, dimmable lights,
@@ -26,4 +28,5 @@ Changes to free@home for Gladys Assistant. Unreleased entries are not yet publis
 - Button events during disconnect/resynchronization are not replayed. ABB's
   combined stop/step command retains a documented read/write race.
 
-[Unreleased]: https://github.com/stefanbauer/gladys-freeathome/commits/main
+[Unreleased]: https://github.com/stefanbauer/gladys-freeathome/compare/0.1.0...HEAD
+[0.1.0]: https://github.com/stefanbauer/gladys-freeathome/releases/tag/0.1.0
