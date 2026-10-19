@@ -7,9 +7,13 @@ for supported functions, hardware verification and known limitations.
 
 ## Current delivery state and approvals
 
-The source repository is public, but **no production image or release has been
-published**. Version `0.1.0`, its GHCR reference and the cover URL are prepared
-metadata, not proof of availability. Store discovery is deliberately disabled.
+Version **0.1.0 was published on 2026-10-19** using the manual `initial` workflow.
+The source repository and GHCR package are public. Anonymous downloads and the
+11 runtime tests passed for both AMD64 and ARM64; full Store validation and a
+separate GitHub-URL installation with real controller discovery and restart
+also passed. The temporary registration was removed without altering existing
+registrations or devices. No device commands were sent during release checks.
+Store discovery is deliberately disabled; `1.0.0` is not yet published.
 
 Preparing files and running local checks do not authorize publication. Obtain
 explicit approval before pushing source, triggering a release or publishing an
@@ -94,6 +98,11 @@ Run workflow**, choose branch `main`, and select the release type:
 | `minor`   | `0.2.0`                 | Compatible additions                              |
 | `major`   | `1.0.0`                 | Explicit major version transition                 |
 
+`initial` records the completed first publication above and is no longer
+available. For the planned stable launch from `0.1.0`, choose `major` only after
+approval. Store discovery remains a separate gate; the release workflow never
+adds the repository topic.
+
 The workflow does not infer release types from commit messages. Normal
 development does not change the package version. `initial` keeps the current
 version; the other choices use `npm version --no-git-tag-version`. The workflow
@@ -114,7 +123,7 @@ The manifest uses the versioned image, never `latest`. Only stable versions are
 supported. For automation, the equivalent human-approved command is:
 
 ```sh
-gh workflow run release.yml --ref main -f release-type=initial
+gh workflow run release.yml --ref main -f release-type=patch
 ```
 
 This command publishes; it is **not a dry run**. The manual workflow continues

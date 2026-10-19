@@ -53,16 +53,15 @@ on the user's machine. Gladys injects the SDK URL, selector and integration
 token; the runtime obtains controller settings from Gladys. No controller
 address, credentials or device identifiers are built into the image.
 
-**Current availability:** there is no published image or Store listing yet.
-For a private test, build the image on the Docker daemon used by Gladys and
-install it using Gladys' **developer mode → install from a Docker image**.
-Use the locally built `ghcr.io/stefanbauer/gladys-freeathome:0.1.0` tag and the supplied
-`gladys-assistant-integration.json`. See the separate
-[development guide](docs/development.md) for building and iterating. A future
-public release must provide a pullable, versioned image before Store installation
-or GitHub-URL installation can be offered; the manifest's prepared image reference
-does not imply that publication has happened. Maintainers follow the
-[release guide](docs/releasing.md); normal pushes run CI, not publication.
+**Current availability:** [release 0.1.0](https://github.com/stefanbauer/gladys-freeathome/releases/tag/0.1.0)
+and its public AMD64/ARM64 image are available. In Gladys, install using the
+GitHub repository URL `https://github.com/stefanbauer/gladys-freeathome`.
+The versioned image is `ghcr.io/stefanbauer/gladys-freeathome:0.1.0`.
+GitHub-URL installation has been verified on the local development instance;
+Store discovery remains deliberately disabled. No Store listing exists yet.
+See the separate [development guide](docs/development.md) for local builds and
+the [release guide](docs/releasing.md) for maintenance. Normal pushes run CI,
+not publication.
 
 In this integration's **Configuration** tab, enter the SysAP origin (including
 `http://` or `https://`), local API username and password. The credentials are
@@ -144,7 +143,8 @@ local data and developer/test scripts. Runtime tests passed inside
 container was also checked against the real SysAP, including restart and
 preservation of the existing four devices, their settings and states. No new
 actuator commands were sent for that container migration check. An actual amd64
-Gladys host and a multi-architecture published image have not been verified.
+Gladys host has not been verified; amd64 runtime checks use emulation locally
+and a native GitHub-hosted runner in CI.
 
 ### Latest local acceptance check (2026-10-19)
 
@@ -165,13 +165,25 @@ Gladys host and a multi-architecture published image have not been verified.
   restart. This is not a physical SysAP reboot or a full LAN outage test.
 - No device commands were sent by this acceptance check. The outstanding real
   hardware cases listed above remain outstanding.
-- Store pre-validation passed with `--skip-image-check`, including categories
-  and the public cover. The remaining warning is intentionally skipped registry
-  verification because no production image is published. This is not full
-  release validation or proof of GitHub-URL installation.
 - Workflow syntax passed actionlint. Extracted release shell steps passed local
   Git fixture checks for all four release types and rejection cases, including
-  an atomic-push conflict. GitHub-hosted execution remains unverified until push.
+  an atomic-push conflict. GitHub-hosted CI and the first release workflow also
+  passed, checking the exact release commit before publication.
+
+### Published 0.1.0 verification (2026-10-19)
+
+- Both architecture images were anonymously downloaded with an empty temporary
+  Docker authentication configuration; all **11 runtime tests per platform**
+  passed under the offline sandbox limits above. Revision, version, license and
+  embedded-manifest labels match the release metadata.
+- Full Store validation passed **without** `--skip-image-check`, including image
+  access, categories and the public cover. This does not enable Store discovery.
+- A separate temporary registration was installed from the GitHub URL, connected
+  to the real controller, discovered 130 channels, passed the read-only connection
+  action and reconnected after restart. No devices were created or operated.
+- The temporary registration was removed. Existing registrations, devices,
+  rooms, feature metadata and controller configuration remained unchanged;
+  the original development container stayed connected.
 
 ## References
 

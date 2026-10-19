@@ -10,9 +10,10 @@ und Jalousien sowie Wand-/Paneltaster als Auslöser für Gladys-Szenen.
 Die Integration läuft in einem eigenen **Linux-Docker-Container unter Gladys**.
 Gladys übernimmt Start, Neustart, Protokolle und Integrationstoken. Nutzer brauchen
 weder macOS noch Node.js auf ihrem Rechner, ein Quellcodeverzeichnis oder `.env`.
-Es gibt noch kein veröffentlichtes Image und keinen Store-Eintrag. Für private
-Tests das selbst gebaute Image im Gladys-Entwicklermodus installieren; die
-[Entwicklungsanleitung](development.md) ist von der normalen Einrichtung getrennt.
+Version `0.1.0` und ein öffentliches AMD64/ARM64-Image sind veröffentlicht.
+In Gladys über die GitHub-Repository-URL installieren:
+`https://github.com/stefanbauer/gladys-freeathome`. Einen Store-Eintrag gibt es
+noch nicht. Lokale Builds stehen separat in der [Entwicklungsanleitung](development.md).
 
 Benötigt werden Gladys ab 5.1.0 mit Docker, ein kompatibler System Access Point mit aktivierter
 lokaler API, seine Adresse einschließlich `http://` oder `https://`, der
@@ -68,8 +69,10 @@ Taster-Szenenereignisse und Neustart/Wiederverbindung geprüft. Ein weiterer man
 Test bestätigte Dimmen auf 31 % und 73 % samt Rückmeldung und Ausschalten bei 0 %.
 Lamellen, die andere Tasterseite und der separate Abwärtsbefehl sind noch nicht an echter
 Hardware geprüft. Gruppen, virtuelle Geräte, free@home-Szenen und weitere
-Sensor-/Heizungsfunktionen gehören nicht zu diesem Umfang. Der Quellcode ist
-öffentlich; es gibt noch kein veröffentlichtes Image, Release oder Store-Angebot.
+Sensor-/Heizungsfunktionen gehören nicht zu diesem Umfang. Für `0.1.0` wurden
+anonyme Image-Downloads, vollständige Validierung und die GitHub-URL-Installation
+mit Controller-Verbindung, Entdeckung und Neustart erfolgreich geprüft.
+Die Store-Suche bleibt bewusst deaktiviert.
 
 ## Betrieb und Updates
 
