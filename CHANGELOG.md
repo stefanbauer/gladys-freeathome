@@ -4,6 +4,14 @@ Changes to free@home for Gladys Assistant. Unreleased entries are not yet publis
 
 ## [Unreleased]
 
+### Stable release
+
+- Promote the verified local free@home integration to the first stable release.
+  Device behavior is unchanged from `0.1.0`; hardware verification limits below
+  still apply. Public catalog discovery is enabled separately after image checks.
+- Exclude local `.amp/in/` review artifacts in the shared Git ignore rules;
+  these files were never tracked and remain excluded from Docker builds.
+
 ### Documentation
 
 - Document published `0.1.0` images and GitHub-URL installation, with anonymous

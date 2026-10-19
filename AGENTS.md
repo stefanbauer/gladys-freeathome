@@ -29,7 +29,8 @@ JavaScript SDK/template and external-integration contracts, not an in-core servi
   scoped and reviewable.
 - Ask before pushing further work, opening PRs, making the repository public,
   publishing images/releases, or submitting to the Gladys Store.
-- No Store-discovery topic (`gladys-assistant-integration`) at this stage.
+- Store-discovery topic changes (`gladys-assistant-integration`) require explicit
+  approval and verified public release images; no release workflow sets the topic.
 - Verify behavior using the SDK's testing tools and inspect real Gladys rendering
   for UI changes. Follow the established English/French/German localization pattern.
 - See README.md for implemented scope, verified behavior and remaining publication
