@@ -143,6 +143,29 @@ preservation of the existing four devices, their settings and states. No new
 actuator commands were sent for that container migration check. An actual amd64
 Gladys host and a multi-architecture published image have not been verified.
 
+### Latest local acceptance check (2026-10-19)
+
+- All **11 tests** passed on the host, in the current arm64 production image and
+  in an emulated amd64 production image. Container tests used no network access,
+  a read-only root filesystem, no capabilities, 256 MB RAM, 0.5 CPU and 100 PIDs.
+- The existing Gladys-managed development registration was updated in place
+  with a freshly built image, then reached `RUNNING` with the real controller
+  connected. Scan, read-only connection action, configuration save with unchanged
+  redacted secrets, restart and stop/start passed.
+- Registration, device identities/names/rooms, feature metadata, configuration
+  and other integrations' registration metadata were compared before and after
+  and remained unchanged.
+- A refused container-loopback address temporarily simulated an unavailable
+  controller. Gladys showed a disconnected controller while the SDK stayed
+  running; restoring the original configuration recovered without a container
+  restart. This is not a physical SysAP reboot or a full LAN outage test.
+- No device commands were sent by this acceptance check. The outstanding real
+  hardware cases listed above remain outstanding.
+- Store pre-validation passed with `--skip-image-check`. Remaining warnings:
+  no categories, no manifest cover URL, and registry verification intentionally
+  skipped because no production image is published. This is not full release
+  validation or proof of GitHub-URL installation.
+
 ## References
 
 - [Official Gladys integration documentation](https://gladysassistant.com/docs/dev/external-integrations/)
