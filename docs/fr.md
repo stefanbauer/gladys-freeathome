@@ -61,8 +61,10 @@ automatiquement, même après reconnexion : un accusé perdu ne prouve pas l’�
 En plus des tests synthétiques, des essais matériels expressément autorisés sur
 le firmware 3.5.3 ont vérifié l’éclairage commuté, le positionnement d’un volet,
 montée/arrêt, les événements de bouton identiques répétés et le redémarrage/la
-reconnexion. Variation, lamelles, autre côté du bouton et commande de descente
-séparée restent à tester sur matériel réel. Groupes, appareils virtuels, scènes
+reconnexion. Un essai manuel supplémentaire a confirmé la variation à 31 % et
+73 % avec retour correspondant, et l’extinction à 0 %. Lamelles, autre côté du
+bouton et commande de descente séparée restent à tester sur matériel réel.
+Groupes, appareils virtuels, scènes
 free@home, chauffage et autres capteurs sont hors périmètre. Code source public,
 sans image publiée, version publiée ni fiche Store.
 

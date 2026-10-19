@@ -34,3 +34,5 @@ JavaScript SDK/template and external-integration contracts, not an in-core servi
   for UI changes. Follow the established English/French/German localization pattern.
 - See README.md for implemented scope, verified behavior and remaining publication
   steps. Public source code does not imply a published Docker image or release.
+- Follow docs/releasing.md for CI, release types, bare X.Y.Z tags and publication
+  checks. Normal main pushes must not publish; release jobs require explicit approval.

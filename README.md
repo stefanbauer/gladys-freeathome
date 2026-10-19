@@ -26,8 +26,9 @@ free@home scenes, virtual devices, HVAC and other sensor classes are not mapped.
 This is **not** a claim that every vendor device or firmware has been tested.
 On firmware 3.5.3, explicitly authorized hardware checks verified a switched light,
 absolute blind positioning, upward movement and stop, repeated identical button
-scene events, process restart and controller reconnection. Dimming, slats, the
-other side of the tested button and the separate downward command remain
+scene events, process restart and controller reconnection. A subsequent manual
+dimmer test confirmed 31% and 73% brightness with matching feedback and off at 0%.
+Slats, the other side of the tested button and the separate downward command remain
 **synthetic-test coverage only**. Source code is public; no Store listing exists.
 
 ## Requirements
@@ -55,11 +56,13 @@ address, credentials or device identifiers are built into the image.
 **Current availability:** there is no published image or Store listing yet.
 For a private test, build the image on the Docker daemon used by Gladys and
 install it using Gladys' **developer mode → install from a Docker image**.
-Use `gladys-freeathome-dev:0.1.0` and the supplied
+Use the locally built `ghcr.io/stefanbauer/gladys-freeathome:0.1.0` tag and the supplied
 `gladys-assistant-integration.json`. See the separate
 [development guide](docs/development.md) for building and iterating. A future
 public release must provide a pullable, versioned image before Store installation
-can be offered; these instructions do not imply that publication has happened.
+or GitHub-URL installation can be offered; the manifest's prepared image reference
+does not imply that publication has happened. Maintainers follow the
+[release guide](docs/releasing.md); normal pushes run CI, not publication.
 
 In this integration's **Configuration** tab, enter the SysAP origin (including
 `http://` or `https://`), local API username and password. The credentials are
@@ -145,7 +148,8 @@ Gladys host and a multi-architecture published image have not been verified.
 
 ### Latest local acceptance check (2026-10-19)
 
-- All **11 tests** passed on the host, in the current arm64 production image and
+- All **12 tests** passed on the host, including the release CLI regression.
+  The **11 runtime tests** passed in the current arm64 production image and
   in an emulated amd64 production image. Container tests used no network access,
   a read-only root filesystem, no capabilities, 256 MB RAM, 0.5 CPU and 100 PIDs.
 - The existing Gladys-managed development registration was updated in place
@@ -161,10 +165,13 @@ Gladys host and a multi-architecture published image have not been verified.
   restart. This is not a physical SysAP reboot or a full LAN outage test.
 - No device commands were sent by this acceptance check. The outstanding real
   hardware cases listed above remain outstanding.
-- Store pre-validation passed with `--skip-image-check`. Remaining warnings:
-  no categories, no manifest cover URL, and registry verification intentionally
-  skipped because no production image is published. This is not full release
-  validation or proof of GitHub-URL installation.
+- Store pre-validation passed with `--skip-image-check`, including categories
+  and the public cover. The remaining warning is intentionally skipped registry
+  verification because no production image is published. This is not full
+  release validation or proof of GitHub-URL installation.
+- Workflow syntax passed actionlint. Extracted release shell steps passed local
+  Git fixture checks for all four release types and rejection cases, including
+  an atomic-push conflict. GitHub-hosted execution remains unverified until push.
 
 ## References
 
@@ -181,3 +188,6 @@ Gladys host and a multi-architecture published image have not been verified.
 `jheling/freeathome` and `kingsleyadam/local-abbfreeathome` informed protocol research;
 no Home Assistant code was copied. Further pushes, PRs, image publication and
 releases require new approval. No Store-discovery topic is set.
+
+Source code is licensed under [MIT](LICENSE). Third-party dependencies retain
+their own licenses; the license grants no rights to vendor trademarks.

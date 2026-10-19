@@ -59,7 +59,8 @@ not prove that a command failed to execute.
 
 Alongside synthetic tests, explicitly authorized firmware 3.5.3 hardware checks
 verified a switched light, blind positioning, up/stop, repeated identical button
-scene events and restart/reconnection. Dimming, slats, the other button side and
+scene events and restart/reconnection. A subsequent manual test confirmed dimming
+at 31% and 73% with matching feedback and off at 0%. Slats, the other button side and
 the separate down command have not been checked on real hardware. Groups,
 virtual devices, free@home scenes, HVAC and other sensors are outside this scope.
 No Store listing or release exists.

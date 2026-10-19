@@ -36,8 +36,8 @@ direct **HTTPS URL** without redirects. The store indexer downloads, validates
 and rehosts that image.
 
 The source repository is public; implementation and cover are on the default
-branch `main`. `cover_image` remains absent from the manifest. The image is
-visible in the README, but is **not yet activated on the installed Gladys catalog
-card**. For catalog activation, use the cover's stable public raw HTTPS URL,
-verify an anonymous fetch and its dimensions/size, then set `cover_image` to that URL.
+branch `main`. The prepared manifest now includes the direct raw HTTPS URL of
+`main/cover.png`. Check its anonymous response and dimensions with the Store
+validator before publishing. This metadata change does not update an already
+installed development registration or enable Store discovery.
 Public source code alone does not publish a Docker image or a Store listing.
