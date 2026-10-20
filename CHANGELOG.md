@@ -4,6 +4,8 @@ Changes to free@home for Gladys Assistant. Unreleased entries are not yet publis
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-10-20
+
 ### Added
 
 - Discover impulse actuators (`FID_TRIGGER`, `0x0045`) as writable Gladys push
@@ -57,6 +59,7 @@ Changes to free@home for Gladys Assistant. Unreleased entries are not yet publis
 - Button events during disconnect/resynchronization are not replayed. ABB's
   combined stop/step command retains a documented read/write race.
 
-[Unreleased]: https://github.com/stefanbauer/gladys-freeathome/compare/1.0.0...HEAD
+[Unreleased]: https://github.com/stefanbauer/gladys-freeathome/compare/1.1.0...HEAD
+[1.1.0]: https://github.com/stefanbauer/gladys-freeathome/compare/1.0.0...1.1.0
 [1.0.0]: https://github.com/stefanbauer/gladys-freeathome/compare/0.1.0...1.0.0
 [0.1.0]: https://github.com/stefanbauer/gladys-freeathome/releases/tag/0.1.0
