@@ -7,6 +7,17 @@ for supported functions, hardware verification and known limitations.
 
 ## Current delivery state and approvals
 
+Version **1.1.0 was published on 2026-10-20** using the approved manual `minor`
+workflow. It adds impulse-actuator push buttons. All 13 host tests and release
+CI passed. Anonymous downloads and all 12 runtime tests passed for each published
+AMD64/ARM64 image; labels match the release commit and full Store validation
+passed. A temporary GitHub-URL installation connected to the real controller,
+discovered 131 channels including the impulse button, and passed the read-only
+connection action, redacted configuration roundtrip and restart. It was removed
+without changing existing registration/device/room/feature metadata or config.
+No device was created or operated; physical impulse actuation remains unverified.
+Existing installations were not updated by this publication check.
+
 Version **1.0.0 was published on 2026-10-19** using the manual `major` workflow,
 following the initial `0.1.0` release earlier that day.
 The source repository and GHCR package are public. Anonymous downloads and the
@@ -94,11 +105,11 @@ needs explicit approval, including tests of a production installation.
 After approval and after pushing the checked source, use **Actions → Release →
 Run workflow**, choose branch `main`, and select the release type:
 
-| Selection | Current `1.0.0` becomes | Meaning                            |
+| Selection | Current `1.1.0` becomes | Meaning                            |
 | --------- | ----------------------- | ---------------------------------- |
 | `initial` | Unavailable             | Only before any version tag exists |
-| `patch`   | `1.0.1`                 | Compatible fixes                   |
-| `minor`   | `1.1.0`                 | Compatible additions               |
+| `patch`   | `1.1.1`                 | Compatible fixes                   |
+| `minor`   | `1.2.0`                 | Compatible additions               |
 | `major`   | `2.0.0`                 | Explicit major version transition  |
 
 `initial` kept `0.1.0` for the first publication and is no longer available.

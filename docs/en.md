@@ -8,7 +8,7 @@ lights, blinds/shutters and wall/panel button actions for Gladys scenes.
 
 The integration runs in its own **Linux Docker container supervised by Gladys**.
 Gladys manages startup, restart, logs and integration credentials. Users need no
-macOS, host Node.js, source checkout or `.env`. Version `1.0.0` is published with
+macOS, host Node.js, source checkout or `.env`. Version `1.1.0` is published with
 a public AMD64/ARM64 image. Install in Gladys using the GitHub repository URL
 `https://github.com/stefanbauer/gladys-freeathome`. Store discovery is enabled;
 catalog visibility depends on the next successful indexing and local cache.
@@ -33,14 +33,16 @@ needed.
 
 ## Controls and button events
 
-**Unreleased (not in `1.0.0`):** impulse actuators (`FID_TRIGGER`, `0x0045`)
+**Since `1.1.0`:** impulse actuators (`FID_TRIGGER`, `0x0045`)
 appear as a separate writable **Press** feature (`button/push`). Create the
 actuator channel in Discovery; a same-named text sensor remains read-only.
 Press on the dashboard, or set the device value to **1** in a scene. Each press
 sends one trigger; free@home retains its configured impulse duration. No extra
 off command or software timer is added, and no contact/door state is inferred.
 Do not change the free@home function or delete existing sensor devices/scenes.
-This mapping has synthetic test coverage only; physical actuation is unverified.
+After updating in Gladys, scan and create the actuator channel. Commands have
+synthetic test coverage; real-controller discovery passed, but physical
+actuation is unverified.
 
 Opening and slat opening are **0% closed, 100% open**. Slats appear only with
 matching datapoints, as a separate percentage slider, not calibrated degrees.

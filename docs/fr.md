@@ -10,7 +10,7 @@ muraux ou de panneaux comme déclencheurs de scènes Gladys.
 L’intégration fonctionne dans son propre **conteneur Docker Linux supervisé par
 Gladys**. Gladys gère le démarrage, les redémarrages, les journaux et le jeton.
 L’utilisateur n’a besoin ni de macOS, ni de Node.js sur son ordinateur, ni du code
-source ou d’un fichier `.env`. La version `1.0.0` est publiée avec une image
+source ou d’un fichier `.env`. La version `1.1.0` est publiée avec une image
 publique AMD64/ARM64. Dans Gladys, utilisez l’URL du dépôt GitHub
 `https://github.com/stefanbauer/gladys-freeathome` pour l’installation.
 La découverte Store est activée ; la visibilité dépend de la prochaine
@@ -36,15 +36,17 @@ créés gardent leur nom ; vous pouvez les renommer dans Gladys.
 
 ## Commandes et boutons
 
-**Non publié (absent de `1.0.0`) :** les actionneurs à impulsion (`FID_TRIGGER`,
+**Depuis `1.1.0` :** les actionneurs à impulsion (`FID_TRIGGER`,
 `0x0045`) proposent une fonction **Press** commandable (`button/push`). Créez
 le canal actionneur dans la découverte ; un capteur texte de même nom reste en
 lecture seule. Appuyez sur le tableau de bord ou réglez la valeur à **1** dans
 une scène. Chaque pression envoie un déclenchement ; la durée reste configurée
 dans free@home, sans minuterie logicielle ni commande d’arrêt supplémentaire.
 Aucun état du contact ou de la porte n’est déduit. Ne modifiez pas la fonction
-free@home et ne supprimez pas les capteurs/scènes existants. Seuls des tests
-synthétiques ont été réalisés ; l’actionnement physique n’est pas vérifié.
+free@home et ne supprimez pas les capteurs/scènes existants. Après la mise à jour
+dans Gladys, relancez la découverte et créez le canal actionneur. Les commandes
+ont été testées par simulation et la découverte sur le contrôleur réel ;
+l’actionnement physique n’est pas vérifié.
 
 Position et ouverture des lamelles : **0 % fermé, 100 % ouvert**. Les lamelles
 ne sont proposées qu’avec les points correspondants, sous forme d’un curseur

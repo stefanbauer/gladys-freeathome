@@ -19,7 +19,7 @@ format, origin and pending catalog URL.
 - Wall/panel switch, dimming, blind and staircase-light buttons: live actions
   as a `button_action` scene trigger, plus a read-only last-action display.
 - Impulse actuators (`FID_TRIGGER`, `0x0045`): a native writable Gladys push
-  button, separate from sensor events (**unreleased**, not in image `1.0.0`).
+  button, separate from sensor events (available since `1.1.0`).
 - Discovery per channel, stable hashed identifiers, user-owned device lifecycle,
   state-change deduplication, reconnect/backoff/heartbeat and snapshot resync.
 
@@ -55,10 +55,10 @@ on the user's machine. Gladys injects the SDK URL, selector and integration
 token; the runtime obtains controller settings from Gladys. No controller
 address, credentials or device identifiers are built into the image.
 
-**Current availability:** [release 1.0.0](https://github.com/stefanbauer/gladys-freeathome/releases/tag/1.0.0)
+**Current availability:** [release 1.1.0](https://github.com/stefanbauer/gladys-freeathome/releases/tag/1.1.0)
 and its public AMD64/ARM64 image are available. In Gladys, install using the
 GitHub repository URL `https://github.com/stefanbauer/gladys-freeathome`.
-The versioned image is `ghcr.io/stefanbauer/gladys-freeathome:1.0.0`.
+The versioned image is `ghcr.io/stefanbauer/gladys-freeathome:1.1.0`.
 GitHub-URL installation has been verified on the local development instance;
 Store discovery is enabled through the repository topic. Catalog visibility
 depends on the next successful hourly index and the Gladys catalog cache.
@@ -162,7 +162,23 @@ actuator commands were sent for that container migration check. An actual amd64
 Gladys host has not been verified; amd64 runtime checks use emulation locally
 and a native GitHub-hosted runner in CI.
 
-### Latest local acceptance check (2026-10-19)
+### Release 1.1.0 verification (2026-10-20)
+
+- All **13 host tests** passed, as did format, lint and GitHub release CI.
+- Both published architectures were anonymously downloaded; all **12 runtime
+  tests per platform** passed offline under the sandbox limits above. Metadata
+  labels match the exact release commit; neither image contains local artifacts
+  or diagnostic credentials. Full Store validation passed without skipping images.
+- A temporary GitHub-URL installation connected to the real controller,
+  discovered **131 channels**, including one writable impulse button, and passed
+  the read-only connection action, redacted configuration roundtrip and restart.
+- The temporary registration was removed; existing registrations, device/room/
+  feature metadata and configuration stayed unchanged. No devices were created
+  or operated. Physical impulse actuation remains unverified.
+- Existing users must update in Gladys, scan and create the separate actuator
+  channel themselves. No existing sensor or scene is automatically migrated.
+
+### Previous local acceptance check (2026-10-19)
 
 - All **12 tests** passed on the host, including the release CLI regression.
   The **11 runtime tests** passed in the current arm64 production image and

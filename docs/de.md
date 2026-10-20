@@ -10,7 +10,7 @@ und Jalousien sowie Wand-/Paneltaster als Auslöser für Gladys-Szenen.
 Die Integration läuft in einem eigenen **Linux-Docker-Container unter Gladys**.
 Gladys übernimmt Start, Neustart, Protokolle und Integrationstoken. Nutzer brauchen
 weder macOS noch Node.js auf ihrem Rechner, ein Quellcodeverzeichnis oder `.env`.
-Version `1.0.0` und ein öffentliches AMD64/ARM64-Image sind veröffentlicht.
+Version `1.1.0` und ein öffentliches AMD64/ARM64-Image sind veröffentlicht.
 In Gladys über die GitHub-Repository-URL installieren:
 `https://github.com/stefanbauer/gladys-freeathome`. Die Store-Erkennung ist aktiviert;
 die Sichtbarkeit hängt vom nächsten erfolgreichen Indexlauf und dem lokalen Cache ab.
@@ -37,7 +37,7 @@ behalten ihre Namen und lassen sich bei Bedarf in Gladys umbenennen.
 
 ## Steuerung und Taster
 
-**Noch unveröffentlicht (nicht in `1.0.0`):** Tastaktoren (`FID_TRIGGER`,
+**Seit `1.1.0`:** Tastaktoren (`FID_TRIGGER`,
 `0x0045`) erhalten eine eigene steuerbare Funktion **Press** (`button/push`).
 In der Entdeckung den Aktorkanal anlegen; ein gleich benannter Text-Sensorkanal
 bleibt schreibgeschützt. Im Dashboard den Tasterknopf betätigen oder in einer Szene den
@@ -45,7 +45,9 @@ Gerätewert **1** setzen. Jeder Aufruf sendet genau einen Auslösebefehl; die
 Impulsdauer bleibt in free@home eingestellt. Kein zusätzlicher AUS-Befehl und
 kein Software-Timer; Kontakt- oder Torzustände werden nicht daraus abgeleitet.
 Die free@home-Funktion nicht umstellen und bestehende Sensoren/Szenen nicht
-löschen. Bisher nur simuliert getestet, nicht am physischen Tor betätigt.
+löschen. Nach dem Update in Gladys neu entdecken und den Aktorkanal anlegen.
+Befehle sind simuliert getestet; die Entdeckung wurde am echten Controller
+geprüft, das physische Tor aber nicht betätigt.
 
 Rolloposition und Lamellenöffnung sind **0 % geschlossen, 100 % offen**. Die
 Lamellenregelung erscheint nur bei passenden Datenpunkten, als eigener Regler
