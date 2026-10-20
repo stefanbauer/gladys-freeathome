@@ -37,6 +37,16 @@ behalten ihre Namen und lassen sich bei Bedarf in Gladys umbenennen.
 
 ## Steuerung und Taster
 
+**Noch unveröffentlicht (nicht in `1.0.0`):** Tastaktoren (`FID_TRIGGER`,
+`0x0045`) erhalten eine eigene steuerbare Funktion **Press** (`button/push`).
+In der Entdeckung den Aktorkanal anlegen; ein gleich benannter Text-Sensorkanal
+bleibt schreibgeschützt. Im Dashboard den Tasterknopf betätigen oder in einer Szene den
+Gerätewert **1** setzen. Jeder Aufruf sendet genau einen Auslösebefehl; die
+Impulsdauer bleibt in free@home eingestellt. Kein zusätzlicher AUS-Befehl und
+kein Software-Timer; Kontakt- oder Torzustände werden nicht daraus abgeleitet.
+Die free@home-Funktion nicht umstellen und bestehende Sensoren/Szenen nicht
+löschen. Bisher nur simuliert getestet, nicht am physischen Tor betätigt.
+
 Rolloposition und Lamellenöffnung sind **0 % geschlossen, 100 % offen**. Die
 Lamellenregelung erscheint nur bei passenden Datenpunkten, als eigener Regler
 in Prozent, nicht als kalibrierter Winkel in Grad. Auf/Ab/Stopp verwendet die

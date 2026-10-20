@@ -18,6 +18,8 @@ format, origin and pending catalog URL.
   is offered only when the channel advertises the corresponding datapoints.
 - Wall/panel switch, dimming, blind and staircase-light buttons: live actions
   as a `button_action` scene trigger, plus a read-only last-action display.
+- Impulse actuators (`FID_TRIGGER`, `0x0045`): a native writable Gladys push
+  button, separate from sensor events (**unreleased**, not in image `1.0.0`).
 - Discovery per channel, stable hashed identifiers, user-owned device lifecycle,
   state-change deduplication, reconnect/backoff/heartbeat and snapshot resync.
 
@@ -89,6 +91,19 @@ an action. Leaving the action empty matches any action from that button.
 `device` and `action` are also available to subsequent scene actions.
 Do not use last-action state changes as a press trigger: two equal presses
 must fire twice, while a state display deliberately deduplicates equal values.
+
+For an impulse actuator, create its separate **Press** channel after discovery.
+It is a writable `button/push`, not an on/off switch. Each dashboard press or
+scene **set device value → 1** sends exactly one `1` to the discovered
+`AL_TIMED_START_STOP` input (pairing ID `2`). The configured free@home trigger
+duration (`PID_TRIGGER_DURATION`) remains unchanged: no software timer, extra
+off command, fabricated contact/door state or automatic retry is added. This
+mapping follows the local API Trigger implementation in
+[`local-abbfreeathome`](https://github.com/kingsleyadam/local-abbfreeathome/blob/main/src/abbfreeathome/channels/trigger.py).
+It is covered by synthetic tests, not a physical garage-door test. A same-named
+text sensor channel remains read-only; do not delete it or change the actuator's
+free@home function to obtain a control. The integration does not migrate devices
+or rewrite existing scene references.
 
 Start, stop, restart, logs and updates belong to Gladys' supervision controls.
 Use **update**, not uninstall/reinstall, to retain registration, devices and

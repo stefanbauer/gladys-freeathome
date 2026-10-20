@@ -36,6 +36,16 @@ créés gardent leur nom ; vous pouvez les renommer dans Gladys.
 
 ## Commandes et boutons
 
+**Non publié (absent de `1.0.0`) :** les actionneurs à impulsion (`FID_TRIGGER`,
+`0x0045`) proposent une fonction **Press** commandable (`button/push`). Créez
+le canal actionneur dans la découverte ; un capteur texte de même nom reste en
+lecture seule. Appuyez sur le tableau de bord ou réglez la valeur à **1** dans
+une scène. Chaque pression envoie un déclenchement ; la durée reste configurée
+dans free@home, sans minuterie logicielle ni commande d’arrêt supplémentaire.
+Aucun état du contact ou de la porte n’est déduit. Ne modifiez pas la fonction
+free@home et ne supprimez pas les capteurs/scènes existants. Seuls des tests
+synthétiques ont été réalisés ; l’actionnement physique n’est pas vérifié.
+
 Position et ouverture des lamelles : **0 % fermé, 100 % ouvert**. Les lamelles
 ne sont proposées qu’avec les points correspondants, sous forme d’un curseur
 distinct en pourcentage, pas en degrés calibrés. Montée/descente/arrêt utilisent

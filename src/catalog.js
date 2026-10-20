@@ -201,6 +201,10 @@ export function buildCatalog(gladys, configuration) {
             },
             U.PERCENT,
           );
+        } else if (fn === 0x45) {
+          // FID_TRIGGER uses AL_TIMED_START_STOP, not binary on/off. The
+          // controller owns PID_TRIGGER_DURATION; each press is one telegram.
+          feature('Press', 'press', C.BUTTON, T.BUTTON.PUSH, 1, 1, 2, undefined, () => null);
         } else if (SENSORS.has(fn)) {
           const actionPoints = SENSORS.get(fn).filter((pair) => output.has(pair));
           if (actionPoints.length) {

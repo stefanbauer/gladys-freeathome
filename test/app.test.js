@@ -110,6 +110,7 @@ test('SDK discovery and feedback expose only supported channels; states require 
       'Dimming button',
       'Blind button',
       'Read-only output',
+      'Impulse actuator',
     ],
   );
   assert.deepEqual(gladys.fake.states, []);
@@ -153,7 +154,7 @@ test('discovery distinguishes equally named channels without changing their iden
   const named = (id) => gladys.fake.discoveredDevices.find((d) => d.external_id === id).name;
   assert.equal(named(first), 'Dimming button [ch0003]');
   assert.equal(named(second), 'Dimming button [ch0004]');
-  assert.equal(gladys.fake.discoveredDevices.length, 6);
+  assert.equal(gladys.fake.discoveredDevices.length, 7);
   assert.ok(gladys.fake.discoveredDevices.some((d) => d.name === 'Switched consumer'));
   // Removing the real collision restores the original name, despite an
   // unsupported channel retaining that label. Feature IDs must stay stable too.
@@ -238,6 +239,51 @@ test('commands resolve actual pairing IDs, enforce ownership, invert positions, 
   state.dropResponse = true;
   assert.equal((await command('Switched consumer', 'binary', 1)).success, false);
   assert.equal(state.writes.length, 10, 'lost response must not retry a possibly executed command');
+});
+
+test('impulse actuators expose a writable push button; each press sends one trigger, never a software reset', async (t) => {
+  const { state, gladys, command, device, feature, createAll, send } = await setup(t);
+  const push = feature('Impulse actuator', 'press');
+  assert.deepEqual(
+    [
+      push.category,
+      push.type,
+      push.min,
+      push.max,
+      push.read_only,
+      push.has_feedback,
+      push.keep_history,
+    ],
+    ['button', 'push', 1, 1, false, false, false],
+  );
+  assert.equal((await command('Impulse actuator', 'press', 1)).success, false);
+  await createAll();
+  const count = gladys.fake.states.length;
+  for (let i = 0; i < 2; i += 1)
+    assert.equal((await command('Impulse actuator', 'press', 1)).success, true);
+  for (const value of [0, -1, 2, 0.5, '1'])
+    assert.equal((await command('Impulse actuator', 'press', value)).success, false);
+  state.dropResponse = true;
+  assert.equal((await command('Impulse actuator', 'press', 1)).success, false);
+  await delay(1100);
+  assert.deepEqual(
+    state.writes.map((w) => [w.path.split('/').at(-1), w.body]),
+    Array.from({ length: 3 }, () => ['SYNTHETIC.ch0008.idp0019', '1']),
+  );
+  assert.equal(gladys.fake.states.length, count, 'a trigger has no actuator-state feedback');
+  assert.deepEqual(gladys.fake.sceneEvents, []);
+  // A changed channel without the trigger input must lose command authority,
+  // even while its user-created button still exists in Gladys.
+  delete state.configuration['synthetic-system'].devices.SYNTHETIC.channels.ch0008.inputs.idp0019;
+  send({}, { configDirty: true });
+  await until(
+    () =>
+      !gladys.fake.discoveredDevices.some(
+        (d) => d.external_id === device('Impulse actuator').external_id,
+      ),
+  );
+  assert.equal((await command('Impulse actuator', 'press', 1)).success, false);
+  assert.equal(state.writes.length, 3);
 });
 
 test('identical live button telegrams trigger independently; snapshots, actuator feedback and unknown groups never trigger', async (t) => {

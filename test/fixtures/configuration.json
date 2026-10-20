@@ -62,6 +62,15 @@
           "ch0007": {
             "functionID": "23",
             "outputs": { "odp0000": { "pairingID": 304, "value": "21" } }
+          },
+          "ch0008": {
+            "displayName": "Impulse actuator",
+            "functionID": "0045",
+            "inputs": {
+              "idp0013": { "pairingID": 4, "value": "0" },
+              "idp0019": { "pairingID": 2, "value": "1" }
+            },
+            "outputs": {}
           }
         }
       }

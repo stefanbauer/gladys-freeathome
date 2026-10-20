@@ -4,6 +4,15 @@ Changes to free@home for Gladys Assistant. Unreleased entries are not yet publis
 
 ## [Unreleased]
 
+### Added
+
+- Discover impulse actuators (`FID_TRIGGER`, `0x0045`) as writable Gladys push
+  buttons. Each press sends one trigger to pairing ID `2`; pulse duration stays
+  in free@home, without a software reset or invented actuator/door feedback.
+- SDK regression coverage for repeated presses, input pairing resolution,
+  rejected values, ownership, lost responses and removed trigger inputs.
+  Physical impulse actuation has not been tested.
+
 ### Documentation
 
 - Record verified stable images, GitHub-URL installation, local-artifact privacy
